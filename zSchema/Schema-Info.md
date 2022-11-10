@@ -15,18 +15,17 @@ Table user {
 
 Table spot {
   id integer
-  userId integer [ref: > user.id]
+  ownerId integer [ref: > user.id]
   previewImage img
   address string
   city string
   state string
   country string
-  lat decimal
-  lng decimal
+  lat decimal (9,6)
+  lng decimal (9,6)
   name string
   description string
   price decimal (6,2)
-  avgRating decimal
   createdAt date
   updatedAt date
 }
@@ -45,7 +44,7 @@ Table review {
   id integer
   userId integer [ref: > user.id]
   spotId integer [ref: > spot.id]
-  reviewText string
+  review string
   stars integer
   createdAt date
   updatedAt date
@@ -54,7 +53,8 @@ Table review {
 Table spotImg {
   id integer
   spotId integer [ref: > spot.id]
-  image image
+  url string
+  preview boolean
   createdAt date
   updatedAt date
 }
@@ -62,7 +62,8 @@ Table spotImg {
 Table reviewImg {
   id integer
   reviewId integer [ref: > review.id]
-  image image
+  url string
+  preview boolean
   createdAt date
   updatedAt date
 }

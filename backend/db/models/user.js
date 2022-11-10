@@ -48,10 +48,43 @@ module.exports = (sequelize, DataTypes) => {
 
     static associate(models) {
       // define association here
+      User.hasMany(models.Spot, {
+        foreignKey: 'ownerId'
+      }),
+      User.hasMany(models.Review, {
+        foreignKey: 'userId'
+      }),
+      User.hasMany(models.Booking, {
+        foreignKey: 'userId'
+      })
     }
   };
   User.init(
     {
+      firstName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          len: [2,20],
+          isNumeric: false
+        }
+      },
+      lastName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          len: [2,40],
+          isNumeric: false
+        }
+      },
+      email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          len: [3, 256],
+          isEmail: true
+        }
+      },
       username: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -62,40 +95,6 @@ module.exports = (sequelize, DataTypes) => {
               throw new Error("Cannot be an email.");
             }
           }
-        }
-      },
-      firstName: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          len: [2,20],
-          isNumeric: false,
-          isNotEmail(value) {
-            if (Validator.isEmail(value)) {
-              throw new Error("Cannot be an email.");
-            }
-          }
-        }
-      },
-      lastName: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          len: [2,40],
-          isNumeric: false,
-          isNotEmail(value) {
-            if (Validator.isEmail(value)) {
-              throw new Error("Cannot be an email.");
-            }
-          }
-        }
-      },
-      email: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          len: [3, 256],
-          isEmail: true
         }
       },
       hashedPassword: {
