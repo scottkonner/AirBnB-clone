@@ -6,7 +6,7 @@ module.exports = {
     return queryInterface.bulkInsert('Spots', [
       {
         ownerId: 1,
-        previewImage: *url*,
+        previewImage: *url from SpotImg*,
         address: '123 Fake St.',
         city: 'Springfield',
         state: 'IL',
@@ -19,7 +19,7 @@ module.exports = {
       },
       {
         ownerId: 2,
-        previewImage: *url*,
+        previewImage: *url from SpotImg*,
         address: '742 Evergreen Terrace',
         city: 'Springfield',
         state: 'IL',

@@ -14,30 +14,39 @@ module.exports = (sequelize, DataTypes) => {
       Booking.belongsTo(models.User, {
         foreignKey: 'userId'
       }),
-      Booking.belongsTo(models.Spot, {
-        foreignKey: 'spotId'
-      })
+        Booking.belongsTo(models.Spot, {
+          foreignKey: 'spotId'
+        })
     }
   }
   Booking.init({
     userId: {
-      type:DataTypes.INTEGER,
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
     spotId: {
-      type:DataTypes.INTEGER,
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
     startDate: {
-      type:DataTypes.DATE,
-      allowNull: false,
-    },
-    endDate: {
-      type:DataTypes.DATE,
+      type: DataTypes.DATE,
       allowNull: false,
       validate: {
-        endBeforeStart(value){
-          if (value < this.startDate ){
+        isDate: true,
+        noPastDates(value) {
+          if (newDate(value) < newDate()) {
+            throw new Error('You can only seleect future dates as your starting date.')
+          }
+        }
+      }
+    },
+    endDate: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      validate: {
+        isDate: true,
+        endBeforeStart(value) {
+          if (value < this.startDate) {
             throw new Error('Your end date must be after your start date')
           }
         }
