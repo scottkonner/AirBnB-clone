@@ -9,12 +9,13 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      ownersId: {
+      ownerId: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
       previewImage: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false
       },
       address: {
         type: Sequelize.STRING,

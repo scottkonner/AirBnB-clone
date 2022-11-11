@@ -35,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
         isDate: true,
         noPastDates(value) {
           if (newDate(value) < newDate()) {
-            throw new Error('You can only seleect future dates as your starting date.')
+            throw new Error('You can only select future dates as your starting date.')
           }
         }
       }

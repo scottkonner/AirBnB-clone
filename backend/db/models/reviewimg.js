@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   ReviewImg.init({
-    spotId: {
+    reviewId: {
       type:DataTypes.INTEGER,
       allowNull: false,
     },
