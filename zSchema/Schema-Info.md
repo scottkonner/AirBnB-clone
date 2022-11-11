@@ -16,7 +16,7 @@ Table user {
 Table spot {
   id integer
   ownerId integer [ref: > user.id]
-  previewImage img
+  previewImage string
   address string
   city string
   state string
@@ -32,8 +32,8 @@ Table spot {
 
 Table booking {
   id integer
-  spotId integer [ref: > spot.id]
   userId integer [ref: > user.id]
+  spotId integer [ref: > spot.id]
   startDate date
   endDate date
   createdAt date
