@@ -20,7 +20,7 @@ const validateSignup = [
     .not()
     .isEmail()
     .withMessage('Username cannot be an email.'),
-  check('fistName')
+  check('firstName')
     .exists({ checkFalsy: true })
     .isLength({ min: 2 })
     .withMessage('Please provide a first name with at least 2 characters.'),
@@ -35,7 +35,7 @@ const validateSignup = [
   handleValidationErrors
 ];
 
-// Sign up
+// 1. Sign up a User
 router.post(
   '/',
   validateSignup,
