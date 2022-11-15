@@ -77,20 +77,21 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
 
 router.get('/current', requireAuth, async (req, res) => {
     const userId = req.user.id
-
-    if (userId) {              //THIS WORKS BUT MAY BE WRONG, ASK FOR HELP
-        userSpots = await Spot.findAll({       //Need average star rating
+//Need average star rating
+        userSpots = await Spot.findAll({
             where: {
                 ownerId: userId
             }
         })
         res.json(userSpots)
-    }
 })
 
 // 8. Get details for a Spot from an id  INCOMPLETE  check scorecard for details
 
 router.get('/:spotId', async (req, res, next) => {
+// Need average star rating, num of reveiws, SpotImgs, and User Info
+
+
 
     const queriedSpot = req.params.spotId
 
@@ -107,9 +108,8 @@ router.get('/:spotId', async (req, res, next) => {
 // 9. Edit a Spot  INCOMPLETE  dynamic error message needs to be crafted
 
 
-router.put('/:spotId', async (req, res, next) => {
+router.put('/:spotId', requireAuth, async (req, res, next) => {
     const currentSpot = req.params.spotId
-    const userId = req.user.id
     const { address, city, state, country, lat, lng, name, description, price } = req.body
 
     const updateSpot = await Spot.findByPk(currentSpot)
@@ -117,7 +117,7 @@ router.put('/:spotId', async (req, res, next) => {
         const err = newError("Spot couldn't be found", 404)
         next(err)
     }
-    if (userId === currentSpot.userId) {
+
         updateSpot.set({
             address: address,
             city: city,
@@ -132,11 +132,8 @@ router.put('/:spotId', async (req, res, next) => {
         })
         await updateSpot.save()
         res.json(updateSpot)
-    } else {
-        const err = newError("Spot couldn't be found", 404)
-        next(err)
-    }
 
+        //need dynamic error catcher
 
 
 })
@@ -196,9 +193,13 @@ router.post('/:spotId/bookings', async (req, res, next) => {
     const userId = req.user.id
     const { startDate, endDate } = req.body
 
-    bookingSpot = await Spot.findByPk(id)
+    const bookingSpot = await Spot.findByPk(id)
+    if (!bookingSpot) {
+        const err = newError("Spot couldn't be found", 404)
+        next(err)
+    }
 
-    newBooking = await Booking.create({
+    const newBooking = await Booking.create({
         userId: userId,
         spotId: bookingSpot.id,
         startDate: startDate,
@@ -210,26 +211,34 @@ router.post('/:spotId/bookings', async (req, res, next) => {
 
 })
 
-// 17. Get all Bookings for a Spot based on the Spot's id  INCOMPLETE
+// 17. Get all Bookings for a Spot based on the Spot's id
 
-router.get('/:spotId/bookings', async (req, res) => {
+router.get('/:spotId/bookings', requireAuth, async (req, res) => {
     const id = req.params.spotId
     const userId = req.user.id
 
-    currentSpot = await Spot.findByPk(id)
+    const currentSpot = await Spot.findByPk(id)
+    if (!currentSpot) {
+        const err = newError("Spot couldn't be found", 404)
+        next(err)
+    }
 
-    allBookings = await Booking.findAll()
-    res.json(allBookings)
+    if (userId !== currentSpot.ownerId) {
+        const allBookingsBasic = await Booking.findAll({
+            attributes: ['spotId', 'startDate', 'endDate']
+        })
+        res.json(allBookingsBasic)
+    }
     if (userId === currentSpot.ownerId) {
-        return res.json({
-            'message': 'you found me right!'
+        const allBookings = await Booking.findAll({
+            include: {
+                model: User,
+                attributes: ['id', 'firstName', 'lastName']
+            }
         })
+        res.json(allBookings)
     }
-    else {
-        return res.json({
-            'message': 'you found me wrong!'
-        })
-    }
+
 })
 
 // 22. Delete a Spot
