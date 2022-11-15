@@ -2,6 +2,7 @@
 const {
   Model
 } = require('sequelize');
+const newError = require('../../utils/newError.js')
 module.exports = (sequelize, DataTypes) => {
   class Booking extends Model {
     /**
@@ -34,8 +35,9 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         isDate: true,
         noPastDates(value) {
-          if (newDate(value) < newDate()) {
-            throw new Error('You can only select future dates as your starting date.')
+          if (new Date(value) < new Date()) {
+            const e = new Error('You can only select future dates as your starting date.')
+            return next(e)
           }
         }
       }

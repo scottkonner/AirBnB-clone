@@ -10,27 +10,60 @@ const router = express.Router();
 
 // 16. Get all of the Current User's Bookings  INCOMPLETE
 
+router.get('/bookings/current', async (req, res,) => {
+    const userId = req.user.id
+})
+
 // 18. Edit a Booking  INCOMPLETE
 
-// 20. Delete a Booking  INCOMPLETE   'if' statement needs to check userId match
+router.put('/bookings/:bookingsId', async (req, res,) => {
+    id = req.params.bookingsId
+    const userId = req.user.id
+    const { startDate, endDate } = req.body
+    currentBooking = await Booking.findByPk(id)
+
+    if(!currentBooking){
+        res.json({
+            "message": "Booking couldn't be found",
+            "statusCode": 404
+          })
+    }
+    if(currentBooking.endDate < 'current date'){
+        
+    }
+
+
+    if(userId === currentBooking.userId){
+        currentBooking.set({
+            startDate: startDate,
+            endDate: endDate
+        })
+
+
+    }
+})
+
+// 20. Delete a Booking  INCOMPLETE   One more error message
 router.delete('/:bookingId', async (req, res,) => {
-    // need to be logged in
 
     const id = req.params.bookingId;
+    const userId = req.user.id
     const deleteBooking = await Booking.findByPk(id);
+
+if (userId === deleteBooking.userId){
     if (deleteBooking) {
         deleteBooking.destroy();
         res.json({
-            statusCode: 200,
-            message: 'Successfully deleted'
-        });
+            "message": "Successfully deleted",
+            "statusCode": 200
+          });
     } else {
         res.json({
-            status: 'not-found',
-            message: `Could not remove booking`,
-            details: 'This booking does not show up in the database'
-        })
+            "message": "Booking couldn't be found",
+            "statusCode": 404
+          })
     }
+}
 })
 
 

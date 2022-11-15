@@ -1,14 +1,10 @@
-
-
-
-const newError = (status, title, message, errors) => {
+const newError = (message, status, errors) => {
     const err = new Error()
-    err.status = status;
-    err.title = title;
     err.message = message;
+    err.status = status;
     err.errors = errors
 
     return err
 }
 
-module.exports
+module.exports = newError

@@ -4,6 +4,8 @@ const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { User } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
+const { noExtendLeft } = require('sequelize/lib/operators');
+const newError = require('../../utils/newError.js')
 
 const router = express.Router();
 
@@ -39,11 +41,20 @@ const validateSignup = [
 router.post(
   '/',
   validateSignup,
-  async (req, res) => {
+  async (req, res, next) => {
     const { email, password, username, firstName, lastName } = req.body;
-    const user = await User.signup({ email, username, password });
+    const duplicate = await User.findOne({
+      where: { email }
+    })
+
+    if (duplicate) {
+      return next(newError('Passable Error for now', 400, ['']))
+    }
+
+    const user = await User.signup({ email, firstName, lastName, username, password });
 
     await setTokenCookie(res, user);
+
 
     return res.json({
       user: user,

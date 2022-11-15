@@ -15,7 +15,7 @@ module.exports = {
       },
       previewImage: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: true
       },
       address: {
         type: Sequelize.STRING,

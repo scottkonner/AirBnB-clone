@@ -14,14 +14,5 @@ router.get("/api/csrf/restore", (req, res) => {
 
 router.use('/api', apiRouter);
 
-// 4. Get All Spots
-
-// router.get('/api/spots', async (req,res) => {
-//   allSpots = await Spot.findAll()
-//   res.json(allSpots)
-// })
-
-
-
 
 module.exports = router;

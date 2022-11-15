@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     previewImage: {
       type:DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     address: {
       type:DataTypes.STRING,
@@ -37,21 +37,21 @@ module.exports = (sequelize, DataTypes) => {
       type:DataTypes.STRING,
       allowNull: false,
       validate: {
-        isAlpha: true
+
       }
     },
     state: {
       type:DataTypes.STRING,
       allowNull: false,
       validate: {
-        isAlpha: true
+
       }
     },
     country: {
       type:DataTypes.STRING,
       allowNull: false,
       validate: {
-        isAlpha: true
+
       }
     },
     lat: {

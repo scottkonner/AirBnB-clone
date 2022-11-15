@@ -17,24 +17,24 @@ const router = express.Router();
 // 14. Edit a Review  INCOMPLETE
 
 
-// 21. Delete a Review  INCOMPLETE    'if' statement needs to check userId match
+// 21. Delete a Review
 router.delete('/:reviewId', async (req, res,) => {
-    // need to be logged in
 
 const id = req.params.reviewId;
+const userId = req.user.id
 const deleteReview = await Review.findByPk(id);
-if (deleteReview) {
+
+if (userId === deleteReview.userId) {
     deleteReview.destroy();
     res.json({
-        statusCode: 200,
-        message: 'Successfully deleted'
-    });
+        "message": "Successfully deleted",
+        "statusCode": 200
+      });
 } else {
     res.json({
-        status: 'not-found',
-        message: `Could not remove review`,
-        details: 'This review does not show up in the database'
-    })
+        "message": "Review couldn't be found",
+        "statusCode": 404
+      })
 }
 })
 module.exports = router;
