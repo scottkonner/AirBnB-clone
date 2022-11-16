@@ -1,7 +1,7 @@
 const express = require('express')
 
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { Review, ReviewImg } = require('../../db/models');
+const { Review, ReviewImg, User, Spot } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const newError = require('../../utils/newError.js');
@@ -9,7 +9,7 @@ const newError = require('../../utils/newError.js');
 const router = express.Router();
 
 
-// 11. Add an Image to a Review based on the Review's id  INCOMPLETE
+// 11. Add an Image to a Review based on the Review's id
 router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
   const id = req.params.reviewId
   const { url } = req.body
@@ -36,7 +36,27 @@ if(allReviewImages.length > 10){
 res.json(newImage)
 })
 
-// 12. Get all Reviews of the Current User  INCOMPLETE
+// 12. Get all Reviews of the Current User
+router.get('/current', requireAuth, async (req, res) => {
+  const userId = req.user.id
+
+  const allReviews = await Review.findAll({
+    where:{
+      userId:userId
+    },
+    include:[{
+      model:User
+    },
+    {
+      model: Spot
+    },
+    {
+      model: ReviewImg
+    }]
+  });
+  res.json(allReviews)
+})
+
 
 
 // 14. Edit a Review  INCOMPLETE
