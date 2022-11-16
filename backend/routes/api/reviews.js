@@ -1,15 +1,40 @@
 const express = require('express')
 
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { Review } = require('../../db/models');
+const { Review, ReviewImg } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
+const newError = require('../../utils/newError.js');
 
 const router = express.Router();
 
 
 // 11. Add an Image to a Review based on the Review's id  INCOMPLETE
+router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
+  const id = req.params.reviewId
+  const { url } = req.body
+  const currentReview = await Review.findByPk(id)
 
+  if (!currentReview) {
+    const err = newError("Review couldn't be found", 404)
+    next(err)
+}
+const allReviewImages = await ReviewImg.findAll({
+  where: {
+    reviewId: currentReview.id
+  }
+})
+if(allReviewImages.length > 10){
+  const err = newError("Maximum number of images for this resource was reached", 403)
+  next(err)
+}
+
+  const newImage = await ReviewImg.create({
+    reviewId: currentReview.id,
+    url: url,
+});
+res.json(newImage)
+})
 
 // 12. Get all Reviews of the Current User  INCOMPLETE
 
