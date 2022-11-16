@@ -16,6 +16,12 @@ module.exports = (sequelize, DataTypes) => {
       }),
       Spot.hasMany(models.SpotImg, {
         foreignKey: 'spotId'
+      }),
+      Spot.hasMany(models.Review, {
+        foreignKey: 'spotId'
+      }),
+      Spot.hasMany(models.Booking, {
+        foreignKey: 'spotId'
       })
     }
   }
@@ -55,7 +61,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     lat: {
-      type:DataTypes.DECIMAL(9,6),
+      type:DataTypes.DECIMAL,
       allowNull: false,
       validate: {
         isDecimal: true,
@@ -64,7 +70,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     lng: {
-      type:DataTypes.DECIMAL(9,6),
+      type:DataTypes.DECIMAL,
       allowNull: false,
       validate: {
         isDecimal: true,
@@ -81,7 +87,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     price: {
-      type:DataTypes.DECIMAL(6,2),
+      type:DataTypes.DECIMAL,
       allowNull: false,
       validate: {
         isDecimal: true

@@ -38,17 +38,24 @@ const validateSignup = [
 ];
 
 // 1. Sign up a User
-router.post(
-  '/',
-  validateSignup,
-  async (req, res, next) => {
+router.post('/', validateSignup, async (req, res, next) => {
     const { email, password, username, firstName, lastName } = req.body;
-    const duplicate = await User.findOne({
+    const duplicateEmail = await User.findOne({
       where: { email }
     })
+    const duplicateUser = await User.findOne({
+      where: { username }
+    })
 
-    if (duplicate) {
-      return next(newError('Passable Error for now', 400, ['']))
+    if (duplicateEmail) {
+      return next(newError("User already exists", 403, [{
+        "email": "User with that email already exists"
+      }]))
+    }
+    if (duplicateUser) {
+      return next(newError("User already exists", 403, [{
+        "username": "User with that username already exists"
+      }]))
     }
 
     const user = await User.signup({ email, firstName, lastName, username, password });
