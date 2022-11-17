@@ -107,11 +107,11 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
     return res.json(newImage)
 })
 
-// 7. Get all Spots owned by the Current User  INCOMPLETE
+// 7. Get all Spots owned by the Current User 
 
 router.get('/current', requireAuth, async (req, res, next) => {
     const userId = req.user.id
-    //Need average star rating
+    //Need average star rating in future
 
     const spotAvgStars = await Spot.findByPk(userId, {
         // include: {
@@ -162,7 +162,7 @@ router.get('/:spotId', async (req, res, next) => {
 })
 
 
-// 9. Edit a Spot  NEEDS TEST
+// 9. Edit a Spot
 
 
 router.put('/:spotId', requireAuth, spotsValidators, async (req, res, next) => {
@@ -258,7 +258,7 @@ router.get('/:spotId/reviews', async (req, res, next) => {
 })
 
 
-// 15. Create a Booking from a Spot based on the Spot's id  NEEDS TEST
+// 15. Create a Booking from a Spot based on the Spot's id
 
 router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
     const id = req.params.spotId
