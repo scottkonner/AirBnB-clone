@@ -53,10 +53,34 @@ const reviewValidators = [
     handleValidationErrors
 ];
 // 4. Get All Spots
+// 23. Add Query Filters to get all Spots  INCOMPLETE
 
 router.get('/', async (req, res) => {
-    allSpots = await Spot.findAll()
-    return res.json(allSpots)
+    const queryObj = req.query;
+    let { page, size } = queryObj;
+
+    page = req.query.page || 1
+    size = req.query.size || 5
+
+    page = Number(page);
+    size = Number(size);
+
+    let limit;
+    let offset;
+
+    if (page === 0){
+        limit = null;
+        offset = null;
+    } else {
+        limit = size;
+        offset = size * (page-1);
+    }
+
+    allSpots = await Spot.findAll({
+        limit:limit,
+        offset:offset
+    })
+    return res.json({allSpots, page, size})
 })
 
 // 5. Create A Spot
@@ -377,6 +401,34 @@ router.delete('/:spotId', requireAuth, async (req, res, next) => {
 
 
 // 23. Add Query Filters to get all Spots  INCOMPLETE
+router.get('/', requireAuth, async (req, res, next) => {
+    const queryObj = req.query;
+    let { page, size } = queryObj;
+
+    page = Number(page);
+    size = Number(size);
+
+    if(Number.isNan(page)) page = 0;
+    if(Number.isNan(size)) size = 20;
+
+    let limit;
+    let offset;
+
+    if (page === 0){
+        limit = null;
+        offset = null;
+    } else {
+        limit = size;
+        offset = size * (page-1);
+    }
+
+
+    allSpots = await Spot.findAll({
+        limit:limit,
+        offset:offset
+    })
+    return res.json({allSpots, page, size})
+})
 
 
 module.exports = router;
