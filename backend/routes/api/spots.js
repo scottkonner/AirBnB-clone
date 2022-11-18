@@ -53,7 +53,7 @@ const reviewValidators = [
     handleValidationErrors
 ];
 // 4. Get All Spots
-// 23. Add Query Filters to get all Spots  INCOMPLETE
+// 23. Add Query Filters to get all Spots 
 
 router.get('/', async (req, res) => {
     const queryObj = req.query;
