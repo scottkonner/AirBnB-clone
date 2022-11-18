@@ -52,10 +52,44 @@ const reviewValidators = [
         .withMessage("Stars must be an integer from 1 to 5"),
     handleValidationErrors
 ];
-// 4. Get All Spots
-// 23. Add Query Filters to get all Spots 
 
-router.get('/', async (req, res) => {
+const queryValidators = [
+    check('page')
+        .isFloat({ min: 0 })
+        .withMessage("Page must be greater than or equal to 0"),
+    check('size')
+        .isFloat({ min: 0 })
+        .withMessage("Size must be greater than or equal to 0"),
+    check('lat')
+        .optional(true)
+        .isFloat({ lte: 90 })
+        .withMessage("Maximum latitude is invalid"),
+    check('lat')
+        .optional(true)
+        .isFloat({ gte: -90 })
+        .withMessage("Minimum latitude is invalid"),
+    check('lng')
+        .optional(true)
+        .isFloat({ lte: 180 })
+        .withMessage("Maximum longitude is invalid"),
+    check('lng')
+        .optional(true)
+        .isFloat({ gte: -180 })
+        .withMessage("Minimum longitude is invalid"),
+    check('price')
+        .optional(true)
+        .isFloat({ gte: 0 })
+        .withMessage("Maximum price must be greater than or equal to 0"),
+    check('price')
+        .optional(true)
+        .isFloat({ gte: 0 })
+        .withMessage("Minimum price must be greater than or equal to 0"),
+    handleValidationErrors
+];
+// 4. Get All Spots
+// 23. Add Query Filters to get all Spots
+
+router.get('/', queryValidators, async (req, res, next) => {
     const queryObj = req.query;
     let { page, size } = queryObj;
 
@@ -68,19 +102,19 @@ router.get('/', async (req, res) => {
     let limit;
     let offset;
 
-    if (page === 0){
+    if (page === 0) {
         limit = null;
         offset = null;
     } else {
         limit = size;
-        offset = size * (page-1);
+        offset = size * (page - 1);
     }
 
     allSpots = await Spot.findAll({
-        limit:limit,
-        offset:offset
+        limit: limit,
+        offset: offset
     })
-    return res.json({allSpots, page, size})
+    return res.json({ allSpots, page, size })
 })
 
 // 5. Create A Spot
@@ -158,12 +192,12 @@ router.get('/:spotId', async (req, res, next) => {
 
         include: [{
             model: SpotImg,
-            attributes: [ 'id', 'url', 'preview']
+            attributes: ['id', 'url', 'preview']
         },
         {
             model: User,
             as: 'Owner',
-            attributes: [ 'id', 'firstName', 'lastName']
+            attributes: ['id', 'firstName', 'lastName']
         }]
     })
     if (!currentSpot) {
@@ -181,12 +215,12 @@ router.get('/:spotId', async (req, res, next) => {
             spotId: queriedSpot
         }
     });
-    const avgStarRating = avgStarTotal/numReviews
+    const avgStarRating = avgStarTotal / numReviews
 
 
-currentSpotData.numReviews = numReviews
+    currentSpotData.numReviews = numReviews
 
-currentSpotData.avgStarRating = avgStarRating
+    currentSpotData.avgStarRating = avgStarRating
 
 
     if (currentSpot) {
@@ -282,12 +316,12 @@ router.get('/:spotId/reviews', async (req, res, next) => {
         }
     })
 
-    if(!anyReviews){
+    if (!anyReviews) {
         const err = newError("Spot couldn't be found", 404)
         return next(err)
     }
 
-        return res.json(allReviews)
+    return res.json(allReviews)
 })
 
 
@@ -386,17 +420,17 @@ router.delete('/:spotId', requireAuth, async (req, res, next) => {
     if (!deleteSpot) {
         const err = newError("Spot couldn't be found", 404)
         return next(err)
-      }
-      if(userId !== deleteSpot.ownerId){
+    }
+    if (userId !== deleteSpot.ownerId) {
         const err = newError("You cannot delete a spot you don't own", 403)
         return next(err)
-      }
+    }
 
-      deleteSpot.destroy();
-      res.json({
-          "message": "Successfully deleted",
-          "statusCode": 200
-      });
+    deleteSpot.destroy();
+    res.json({
+        "message": "Successfully deleted",
+        "statusCode": 200
+    });
 })
 
 
@@ -408,26 +442,26 @@ router.get('/', requireAuth, async (req, res, next) => {
     page = Number(page);
     size = Number(size);
 
-    if(Number.isNan(page)) page = 0;
-    if(Number.isNan(size)) size = 20;
+    if (Number.isNan(page)) page = 0;
+    if (Number.isNan(size)) size = 20;
 
     let limit;
     let offset;
 
-    if (page === 0){
+    if (page === 0) {
         limit = null;
         offset = null;
     } else {
         limit = size;
-        offset = size * (page-1);
+        offset = size * (page - 1);
     }
 
 
     allSpots = await Spot.findAll({
-        limit:limit,
-        offset:offset
+        limit: limit,
+        offset: offset
     })
-    return res.json({allSpots, page, size})
+    return res.json({ allSpots, page, size })
 })
 
 
