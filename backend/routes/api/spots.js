@@ -113,20 +113,6 @@ router.get('/current', requireAuth, async (req, res, next) => {
     const userId = req.user.id
     //Need average star rating in future
 
-    const spotAvgStars = await Spot.findByPk(userId, {
-        // include: {
-        //     model: Review,
-        //     attributes: ['stars']
-        // },
-        // attributes: [
-        //     [sequelize.fn('AVG', sequelize.col('Review.stars')), 'averageStars'],
-        // ],
-        // raw: true
-    })
-    // for 'Get details'
-    // const reviews = spotAvgStars.dataValues.Reviews.length
-    // spotAvgStars.dataValues.numReviews = reviews
-
     userSpots = await Spot.findAll({
         where: {
             ownerId: userId
@@ -138,16 +124,13 @@ router.get('/current', requireAuth, async (req, res, next) => {
     return res.json(userSpots)
 })
 
-// 8. Get details for a Spot from an id  INCOMPLETE  check scorecard for details
+// 8. Get details for a Spot from an id
 
 router.get('/:spotId', async (req, res, next) => {
-    // Need average star rating
 
     const queriedSpot = req.params.spotId
 
-
     currentSpot = await Spot.findByPk(queriedSpot, {
-
 
         include: [{
             model: SpotImg,
