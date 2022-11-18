@@ -107,7 +107,7 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
     return res.json(newImage)
 })
 
-// 7. Get all Spots owned by the Current User 
+// 7. Get all Spots owned by the Current User
 
 router.get('/current', requireAuth, async (req, res, next) => {
     const userId = req.user.id
@@ -141,23 +141,49 @@ router.get('/current', requireAuth, async (req, res, next) => {
 // 8. Get details for a Spot from an id  INCOMPLETE  check scorecard for details
 
 router.get('/:spotId', async (req, res, next) => {
-    // Need average star rating, num of reveiws, SpotImgs, and User Info
+    // Need average star rating
 
     const queriedSpot = req.params.spotId
 
+
     currentSpot = await Spot.findByPk(queriedSpot, {
-        include: {
-            model: Review,
-            attributes: []
+
+
+        include: [{
+            model: SpotImg,
+            attributes: [ 'id', 'url', 'preview']
         },
+        {
+            model: User,
+            as: 'Owner',
+            attributes: [ 'id', 'firstName', 'lastName']
+        }]
     })
     if (!currentSpot) {
         const err = newError("Spot couldn't be found", 404)
-        next(err);
+        return next(err);
     }
+    const currentSpotData = await currentSpot.toJSON();
+    const numReviews = await Review.count({
+        where: {
+            spotId: queriedSpot
+        }
+    });
+    const avgStarTotal = await Review.sum('stars', {
+        where: {
+            spotId: queriedSpot
+        }
+    });
+    const avgStarRating = avgStarTotal/numReviews
+
+
+currentSpotData.numReviews = numReviews
+
+currentSpotData.avgStarRating = avgStarRating
+
 
     if (currentSpot) {
-        return res.json(currentSpot)
+        return res.json(currentSpotData)
     }
 })
 
