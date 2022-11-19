@@ -55,9 +55,11 @@ const reviewValidators = [
 
 const queryValidators = [
     check('page')
+        .optional(true)
         .isFloat({ min: 0 })
         .withMessage("Page must be greater than or equal to 0"),
     check('size')
+        .optional(true)
         .isFloat({ min: 0 })
         .withMessage("Size must be greater than or equal to 0"),
     check('lat')
@@ -93,8 +95,8 @@ router.get('/', queryValidators, async (req, res, next) => {
     const queryObj = req.query;
     let { page, size } = queryObj;
 
-    page = req.query.page || 1
-    size = req.query.size || 5
+    page = req.query.page || 0
+    size = req.query.size || 20
 
     page = Number(page);
     size = Number(size);
@@ -432,37 +434,5 @@ router.delete('/:spotId', requireAuth, async (req, res, next) => {
         "statusCode": 200
     });
 })
-
-
-// 23. Add Query Filters to get all Spots  INCOMPLETE
-router.get('/', requireAuth, async (req, res, next) => {
-    const queryObj = req.query;
-    let { page, size } = queryObj;
-
-    page = Number(page);
-    size = Number(size);
-
-    if (Number.isNan(page)) page = 0;
-    if (Number.isNan(size)) size = 20;
-
-    let limit;
-    let offset;
-
-    if (page === 0) {
-        limit = null;
-        offset = null;
-    } else {
-        limit = size;
-        offset = size * (page - 1);
-    }
-
-
-    allSpots = await Spot.findAll({
-        limit: limit,
-        offset: offset
-    })
-    return res.json({ allSpots, page, size })
-})
-
 
 module.exports = router;
