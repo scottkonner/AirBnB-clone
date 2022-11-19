@@ -39,34 +39,35 @@ const validateSignup = [
 
 // 1. Sign up a User
 router.post('/', validateSignup, async (req, res, next) => {
-    const { email, password, username, firstName, lastName } = req.body;
-    const duplicateEmail = await User.findOne({
-      where: { email }
-    })
-    const duplicateUser = await User.findOne({
-      where: { username }
-    })
+  const { email, password, username, firstName, lastName } = req.body;
+  const duplicateEmail = await User.findOne({
+    where: { email }
+  })
+  const duplicateUser = await User.findOne({
+    where: { username }
+  })
 
-    if (duplicateEmail) {
-      return next(newError("User already exists", 403, [{
-        "email": "User with that email already exists"
-      }]))
-    }
-    if (duplicateUser) {
-      return next(newError("User already exists", 403, [{
-        "username": "User with that username already exists"
-      }]))
-    }
-
-    const user = await User.signup({ email, firstName, lastName, username, password });
-
-    await setTokenCookie(res, user);
-
-
-    return res.json({
-      user: user,
-    });
+  if (duplicateEmail) {
+    return next(newError("User already exists", 403, [{
+      "email": "User with that email already exists"
+    }]))
   }
+  if (duplicateUser) {
+    return next(newError("User already exists", 403, [{
+      "username": "User with that username already exists"
+    }]))
+  }
+
+  const user = await User.signup({ email, firstName, lastName, username, password });
+
+  await setTokenCookie(res, user);
+
+  user.dataValues.token = req.cookies.token
+
+  return res.json({
+    user: user,
+  });
+}
 );
 
 
