@@ -22,8 +22,6 @@ module.exports = {
 
 
   async down (queryInterface, Sequelize) {
-    return queryInterface.bulkDelete('Bookings', {
-      where: {name: bookings.map( bookings=> bookings.id)}
-    }, {});
+    await queryInterface.bulkDelete('Bookings',{});
   }
 };
