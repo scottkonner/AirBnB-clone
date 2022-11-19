@@ -18,10 +18,7 @@ module.exports = {
     ], {});
   },
 
-
   async down (queryInterface, Sequelize) {
-    return queryInterface.bulkDelete('SpotImgs', {
-      where: {name: spotImgs.map( spotImgs=> spotImgs.url)}
-    }, {});
+    await queryInterface.bulkDelete('SpotImgs',{});
   }
 };

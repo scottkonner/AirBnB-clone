@@ -16,10 +16,7 @@ module.exports = {
     ], {});
   },
 
-
   async down (queryInterface, Sequelize) {
-    return queryInterface.bulkDelete('ReviewImgs', {
-      where: {name: ReviewImgs.map( ReviewImgs=> ReviewImgs.url)}
-    }, {});
+    await queryInterface.bulkDelete('ReviewImgs',{});
   }
 };

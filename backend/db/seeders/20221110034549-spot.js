@@ -34,9 +34,7 @@ module.exports = {
     ], {});
   },
 
-  async down (queryInterface, Sequelize) {
-      return queryInterface.bulkDelete('Spots', {
-        where: {name: spots.map( spot=> spot.name)}
-      }, {});
+    async down (queryInterface, Sequelize) {
+      await queryInterface.bulkDelete('Spots',{});
     }
 };
