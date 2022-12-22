@@ -1,9 +1,15 @@
 'use strict';
 
+let options = {};
+if (process.env.NODE_ENV === 'production') {
+  options.schema = process.env.SCHEMA;  // define your schema in options object
+}
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    return queryInterface.bulkInsert('SpotImgs', [
+    options.tableName = 'SpotImgs'
+    return queryInterface.bulkInsert(options, [
       {
         spotId: 1,
         url: 'https://static.wikia.nocookie.net/simpsons/images/5/53/Fake_street.png/revision/latest?cb=20100904145952',
@@ -19,6 +25,7 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('SpotImgs',{});
+    options.tableName = 'SpotsImg'
+    await queryInterface.bulkDelete(options,{});
   }
 };
