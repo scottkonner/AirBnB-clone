@@ -6,6 +6,7 @@ const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const newError = require('../../utils/newError.js');
 const { application } = require('express');
+const { Op } = require('sequelize')
 
 
 const router = express.Router();
@@ -24,7 +25,6 @@ const spotsValidators = [
         .exists({ checkFalsy: true })
         .withMessage("Country is required"),
     check('lat')
-        .exists({ checkFalsy: true })
         .isFloat({ min: -90, max: 90 })
         .withMessage("Latitude is not valid"),
     check('lng')
@@ -38,8 +38,11 @@ const spotsValidators = [
         .exists({ checkFalsy: true })
         .withMessage("Description is required"),
     check('price')
-        .isFloat({ min: 0.01 })
+        .exists({ checkFalsy: true })
         .withMessage("Price per day is required"),
+    check('price')
+        .isFloat({ min: 0.01 })
+        .withMessage("Price must be more than 0"),
     handleValidationErrors
 ];
 
@@ -49,6 +52,9 @@ const reviewValidators = [
         .withMessage("Review text is required"),
     check('stars')
         .exists({ checkFalsy: true })
+        .withMessage("A star rating is required"),
+    check('stars')
+        .isFloat({ min: 1, max: 5 })
         .withMessage("Stars must be an integer from 1 to 5"),
     handleValidationErrors
 ];
@@ -122,11 +128,12 @@ router.get('/', queryValidators, async (req, res, next) => {
 // 5. Create A Spot
 
 router.post('/', requireAuth, spotsValidators, async (req, res, next) => {
-    const { address, city, state, country, lat, lng, name, description, price } = req.body
+    const { previewImage, address, city, state, country, lat, lng, name, description, price } = req.body
     const userId = req.user.id
 
     const newSpot = await Spot.create({
         ownerId: userId,
+        previewImage: previewImage,
         address: address,
         city: city,
         state: state,
@@ -236,7 +243,7 @@ router.get('/:spotId', async (req, res, next) => {
 
 router.put('/:spotId', requireAuth, spotsValidators, async (req, res, next) => {
     const currentSpot = req.params.spotId
-    const { address, city, state, country, lat, lng, name, description, price } = req.body
+    const { address, city, state, country, lat, lng, name, previewImage, description, price } = req.body
     const userId = req.user.id
 
     const updateSpot = await Spot.findByPk(currentSpot)
@@ -257,6 +264,7 @@ router.put('/:spotId', requireAuth, spotsValidators, async (req, res, next) => {
         lat: lat,
         lng: lng,
         name: name,
+        previewImage: previewImage,
         description: description,
         price: price,
         updatedAt: new Date()
@@ -277,19 +285,19 @@ router.post('/:spotId/reviews', requireAuth, reviewValidators, async (req, res, 
         const err = newError("Spot couldn't be found", 404)
         return next(err)
     }
-    const alreadyReviewed = await Review.findAll({
+    const alreadyReviewed = await Review.findOne({
         where: {
-            userId: userId
+            [Op.and]: [{ userId }, { spotId: reviewedSpot.id }]
         }
     })
-    if (alreadyReviewed.length > 0) {
+    if (alreadyReviewed) {
         const err = newError("User already has a review for this spot", 403)
         return next(err)
     }
 
 
     const newReview = await Review.create({
-        userId: reviewedSpot.ownerId,
+        userId: userId,
         spotId: reviewedSpot.id,
         review: review,
         stars: stars
@@ -306,7 +314,7 @@ router.post('/:spotId/reviews', requireAuth, reviewValidators, async (req, res, 
 router.get('/:spotId/reviews', async (req, res, next) => {
     const queriedSpot = req.params.spotId
 
-    const anyReviews = await Review.findByPk(queriedSpot)
+    const anyReviews = await Spot.findByPk(queriedSpot)
 
     const allReviews = await Review.findAll({
         where: {

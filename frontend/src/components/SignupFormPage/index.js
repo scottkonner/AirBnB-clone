@@ -31,65 +31,65 @@ function SignupFormPage() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className='form' onSubmit={handleSubmit}>
       <ul>
         {errors.map((error, idx) => <li key={idx}>{error}</li>)}
       </ul>
-      <label>
+      <label className='label'>
         Email:
-        <input
+        <input className='form-items'
           type="text"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
         />
       </label>
-      <label>
-        First Name
-        <input
+      <label className='label'>
+        First Name:
+        <input className='form-items'
           type="text"
           value={firstName}
           onChange={(e) => setFirstname(e.target.value)}
           required
         />
       </label>
-      <label>
-        Last Name
-        <input
+      <label className='label'>
+        Last Name:
+        <input className='form-items'
           type="text"
           value={lastName}
           onChange={(e) => setLastname(e.target.value)}
           required
         />
       </label>
-      <label>
-        Username
-        <input
+      <label className='label'>
+        Username:
+        <input className='form-items'
           type="text"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           required
         />
       </label>
-      <label>
-        Password
-        <input
+      <label className='label'>
+        Password:
+        <input className='form-items'
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
         />
       </label>
-      <label>
-        Confirm Password
-        <input
+      <label className='label'>
+        Confirm Password:
+        <input className='form-items'
           type="password"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
           required
         />
       </label>
-      <button type="submit">Sign Up</button>
+      <button className='button' type="submit">Sign Up</button>
     </form>
   );
 }

@@ -1,0 +1,34 @@
+.navBar-unlogged{
+  background-color: red;
+}
+
+
+.profile-dropdown{
+  color: red;
+  background-color:aliceblue;
+  border: 3px solid green;
+}
+
+.profileButton{
+
+  width: 300px;
+  height:20px;
+  border: 1px solid green;
+
+};
+
+.Nav-Items{
+  display:flex;
+  /* justify-content:center;
+  align-items: top; */
+}
+
+.navBar{
+    display: flex;
+    justify-content:space-between;
+    height:70px;
+    align-items: top;
+    border-bottom: 1px solid #e2e2e2;
+    padding-bottom: 11px;
+    list-style:none;
+};

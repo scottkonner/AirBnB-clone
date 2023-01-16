@@ -1,0 +1,15 @@
+.Footer{
+
+    position:absolute;
+    bottom: 0px;
+}
+
+.Foot-Items{
+    display:flex;
+    justify-content:left;
+    align-items: bottom;
+}
+
+.Link-Text{
+    color:#0000EE
+}

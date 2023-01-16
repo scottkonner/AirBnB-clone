@@ -1,8 +1,6 @@
-/* *{
-background-color: yellow;
-} */
 
-/* .button {
+
+.button {
     background-color: #6288a5;
     border-radius: 3px;
     color: white;
@@ -11,31 +9,26 @@ background-color: yellow;
     font-weight: bold;
     margin: 0 4px;
     padding: 7px 9px;
-  };
+  }
 
-.form-items{
+  .create_edit_form-items{
     display:flex;
     padding:10px;
     background-color: azure;
     border-radius:5px;
-    margin: 10px;
+    margin: 5px;
     border:3px purple solid;
     align-items: center;
-    width:200px;
+    width:300px;
     height:10px;
-};
-
-
+}
 
 .label{
     background-color: azure;
-    padding: 60px;
+    padding: 10px;
+    width:2500px
+}
 
-} */
-
-/* .form{
-    display:flex;
-    flex-direction: column;
-    align-items:left;
-    background-color:yellow
-}; */
+.create_edit-page{
+    background-color:antiquewhite
+}
