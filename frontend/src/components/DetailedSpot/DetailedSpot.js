@@ -63,7 +63,7 @@ const DetailedSpot = () => {
     }
 
     return isLoaded ? (
-        <div>
+        <div >
             <img src={detailedSpot.previewImage} alt='not loading'></img>
             <div>{detailedSpot.name}, located in {detailedSpot.city},{detailedSpot.state}, {detailedSpot.country}</div>
             <div>${detailedSpot.price} per night</div>
@@ -77,13 +77,14 @@ const DetailedSpot = () => {
             <button onClick={openMenu}>
                 Reviews
             </button>
+            {(!isOwner && !findTheReview) && <button onClick={event => window.location.href = `/${spotId}/createreview`}>Leave a review</button>}
             {showMenu && (
                 <div className="profile-dropdown">
                     <ReviewList/>
 
                 </div>
             )}
-            {(!isOwner && !findTheReview) && <button onClick={event => window.location.href = `/${spotId}/createreview`}>Leave a review</button>}
+
 
             {isOwner && <button onClick={event => window.location.href = `/editspot/${spotId}`}>Edit</button>}
             {isOwner && <button onClick={deleteHandler}>Delete</button>}

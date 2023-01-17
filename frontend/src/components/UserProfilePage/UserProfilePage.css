@@ -1,0 +1,16 @@
+.newSpot-button{
+    background-color: #6288a5;
+    border-radius: 3px;
+    color: white;
+    font-family: arial, helvetica, sans-serif;
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0 4px;
+    padding: 7px 9px;
+}
+
+
+.newSpot-button-container{
+    display:flex;
+    justify-content:center;
+}

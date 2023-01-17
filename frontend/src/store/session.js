@@ -49,8 +49,11 @@ export const signup = (user) => async (dispatch) => {
       lastName
     }),
   });
+  if(response.ok){
   const data = await response.json();
-  dispatch(setUser(data.user));
+  return dispatch(setUser(data.user));
+
+  }
   return response;
 };
 

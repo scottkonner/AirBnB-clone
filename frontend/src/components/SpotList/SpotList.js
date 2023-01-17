@@ -18,9 +18,9 @@ const SpotList = () => {
     }, [dispatch])
 
     return (
-    <div>
+    <div className='spotList'>
         {spotsArr.map(spot =>
-        <SpotCard spot ={spot}/>
+        <SpotCard  spot ={spot}/>
         )}
     </div>
     )

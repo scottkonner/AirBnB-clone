@@ -1,10 +1,37 @@
 
-/* .spotCard{
+
+
+.spotCard-Name{
+    /* margin:1rem; */
+    margin-top:0.5rem;
+    /* margin-bottom:0rem; */
+    font-size:18px;
+    font-weight:bold;
+
+}
+
+
+
+.spotCard-Pic img{
+    overflow:hidden;
+    height:200px;
+    width:300px;
+    object-fit:cover;
+
+}
+
+
+
+.spotCard{
     display:flex;
-    justify-content:center;
-    align-items: center;
-    border: 2px solid black;
-    background-color: red;
+    flex-direction:column;
+    align-items:center;
+    width: 300px;
+    height:300px;
+    margin:20px;
+    border: 3px black solid;
+    overflow:hidden;
+    box-shadow: 0px 0px 15px 1px;
+    background-color: #d6bef1;
 
-
-}; */
+};

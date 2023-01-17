@@ -19,10 +19,14 @@ const spotsArr = Object.values(spotsObj);
     }, [dispatch])
 
     return (
-    <div>
-        <button
+<div>
+    <div className='newSpot-button-container'><button className='newSpot-button'
         onClick={event => window.location.href='/createspot'}>Add a new Spot!
         </button>
+    </div>
+
+    <div className='spotList'>
+
         <div>
         {spotsArr.map(spot =>
         <SpotCard spot ={spot}/>
@@ -30,6 +34,7 @@ const spotsArr = Object.values(spotsObj);
         </div>
 
 
+    </div>
     </div>
     )
 }

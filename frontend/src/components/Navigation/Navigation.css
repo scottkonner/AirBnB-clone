@@ -4,7 +4,6 @@
 
 
 .profile-dropdown{
-  color: red;
   background-color:aliceblue;
   border: 3px solid green;
 }
@@ -19,16 +18,18 @@
 
 .Nav-Items{
   display:flex;
-  /* justify-content:center;
-  align-items: top; */
+  justify-content:center;
+  align-items: top;
 }
 
 .navBar{
     display: flex;
     justify-content:space-between;
-    height:70px;
+    height:80px;
     align-items: top;
     border-bottom: 1px solid #e2e2e2;
     padding-bottom: 11px;
     list-style:none;
+    background-color: #d6bef1;
+
 };

@@ -20,13 +20,18 @@ if(sessionUser){
     }
     return (
         <div className="spotCard">
-            <img className='spotPic' src={spot.previewImage} alt='not loading'></img>
-            <div>{spot.name}, located in {spot.city},{spot.state}</div>
-            <div>${spot.price} per night</div>
-            <button onClick={event => window.location.href=`/${spot.id}`}>Details</button>
-            {isOwner && <button onClick={event => window.location.href=`/editspot/${spot.id}`}>Edit</button>}
-            {isOwner && <button onClick={deleteHandler}>Delete</button>}
+            <div className='spotCard-Pic'>
+                <img  src={spot.previewImage} alt='not loading'></img>
             </div>
+            <div className='spotCard-Name'>{spot.name}</div>
+            <div className='spotCard-Location'>{spot.city},{spot.state}</div>
+            <div className='spotCard-Price'>${spot.price} per night</div>
+            <div className='spotCard-buttonBlock'>
+                <button className='button'onClick={event => window.location.href=`/${spot.id}`}>Details</button>
+                {isOwner && <button className='button' onClick={event => window.location.href=`/editspot/${spot.id}`}>Edit</button>}
+                {isOwner && <button className='button' onClick={deleteHandler}>Delete</button>}
+            </div>
+        </div>
     )
 }
 

@@ -1,12 +1,12 @@
 .Footer{
 
-    position:absolute;
+    position:sticky;
     bottom: 0px;
 }
 
 .Foot-Items{
     display:flex;
-    justify-content:left;
+    justify-content:right;
     align-items: bottom;
 }
 
