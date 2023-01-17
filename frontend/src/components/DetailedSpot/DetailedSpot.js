@@ -79,7 +79,7 @@ const DetailedSpot = () => {
             <div className='detailedSpot-text'>Joined AirBnb on {detailedSpot.createdAt}</div>
 
             <div className='detailedSpot-buttonBlock'>
-                <button onClick={openMenu} className='button'>
+                <button onClick={openMenu} className='detailedSpot-button'>
                     Reviews
                 </button>
                 {(!isOwner && !findTheReview) && <button onClick={event => window.location.href = `/${spotId}/createreview`} className='detailedSpot-button'>Leave a review</button>}
