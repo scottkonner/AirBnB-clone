@@ -48,7 +48,7 @@
     display: flex;
     justify-content:space-between;
     height:80px;
-    align-items: top;
+    align-items: flex-start;
     border: 1px dashed black;
     border-bottom: 3px solid black;
     padding-bottom: 11px;

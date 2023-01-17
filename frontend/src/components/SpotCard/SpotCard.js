@@ -27,9 +27,9 @@ if(sessionUser){
             <div className='spotCard-Location'>{spot.city},{spot.state}</div>
             <div className='spotCard-Price'>${spot.price} per night</div>
             <div className='spotCard-buttonBlock'>
-                <button className='button'onClick={event => window.location.href=`/${spot.id}`}>Details</button>
-                {isOwner && <button className='button' onClick={event => window.location.href=`/editspot/${spot.id}`}>Edit</button>}
-                {isOwner && <button className='button' onClick={deleteHandler}>Delete</button>}
+                <button className='spotCard-button'onClick={event => window.location.href=`/${spot.id}`}>Details</button>
+                {isOwner && <button className='spotCard-button' onClick={event => window.location.href=`/editspot/${spot.id}`}>Edit</button>}
+                {isOwner && <button className='spotCard-button' onClick={deleteHandler}>Delete</button>}
             </div>
         </div>
     )
