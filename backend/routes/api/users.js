@@ -47,15 +47,23 @@ router.post('/', validateSignup, async (req, res, next) => {
     where: { username }
   })
 
+  // if (duplicateEmail) {
+  //   return next(newError("User already exists", 403, [{
+  //     "email": "User with that email already exists"
+  //   }]))
+  // }
   if (duplicateEmail) {
-    return next(newError("User already exists", 403, [{
-      "email": "User with that email already exists"
-    }]))
+    return next(newError("User already exists", 403, ["User with that email already exists"
+    ]))
   }
+  // if (duplicateUser) {
+  //   return next(newError("User already exists", 403, [{
+  //     "username": "User with that username already exists"
+  //   }]))
+  // }
   if (duplicateUser) {
-    return next(newError("User already exists", 403, [{
-      "username": "User with that username already exists"
-    }]))
+    return next(newError("User already exists", 403, ["User with that username already exists"
+  ]))
   }
 
   const user = await User.signup({ email, firstName, lastName, username, password });

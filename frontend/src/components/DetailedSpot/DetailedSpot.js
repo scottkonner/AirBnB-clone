@@ -82,9 +82,9 @@ const DetailedSpot = () => {
                 <button onClick={openMenu} className='button'>
                     Reviews
                 </button>
-                {(!isOwner && !findTheReview) && <button onClick={event => window.location.href = `/${spotId}/createreview`} className='button'>Leave a review</button>}
-                {isOwner && <button onClick={event => window.location.href = `/editspot/${spotId}`} className='button'>Edit</button>}
-                {isOwner && <button onClick={deleteHandler} className='button'>Delete</button>}
+                {(!isOwner && !findTheReview) && <button onClick={event => window.location.href = `/${spotId}/createreview`} className='detailedSpot-button'>Leave a review</button>}
+                {isOwner && <button onClick={event => window.location.href = `/editspot/${spotId}`} className='detailedSpot-button'>Edit</button>}
+                {isOwner && <button onClick={deleteHandler} className='detailedSpot-button'>Delete</button>}
             </div>
             {showMenu && (
                 <div className="profile-dropdown">

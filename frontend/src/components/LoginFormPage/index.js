@@ -81,7 +81,7 @@ setPassword('password')
           required
         />
       </label>
-      <button className='button' type="submit">Log In</button>
+      <button className='login-button ' type="submit">Log In</button>
 
     </form>
     </div>
