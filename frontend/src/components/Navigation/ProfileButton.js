@@ -41,7 +41,7 @@ function ProfileButton({ user }) {
             <Link  className='Link-Text-myProfile' to = "/profile" >My Profile!</Link>
           </li>
           <li>
-            <button className='button' onClick={logout}>Log Out</button>
+            <button className='profile-logout-button' onClick={logout}>Log Out</button>
           </li>
         </ul>
       )}

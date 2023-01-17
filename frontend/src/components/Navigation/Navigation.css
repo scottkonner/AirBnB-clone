@@ -25,6 +25,18 @@
   flex:column;
 }
 
+.profile-logout-button{
+  background-color: #6288a5;
+  border-radius: 3px;
+  color: white;
+  font-family: arial, helvetica, sans-serif;
+  font-size: 11px;
+  font-weight: bold;
+  margin: 0 4px;
+  padding: 4px 9px;
+}
+
+
 .profile-dropdown{
   background-color:aliceblue;
   border: 3px solid green;
