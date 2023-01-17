@@ -38,7 +38,7 @@ function ProfileButton({ user }) {
         <ul className="profile-dropdown">
           <li>{user.email}</li>
           <li>
-            <Link  className='Link-Text' to = "/profile" >My Profile!</Link>
+            <Link  className='Link-Text-myProfile' to = "/profile" >My Profile!</Link>
           </li>
           <li>
             <button className='button' onClick={logout}>Log Out</button>

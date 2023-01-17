@@ -1,7 +1,29 @@
-.navBar-unlogged{
+/* .navBar-unlogged{
   background-color: red;
+} */
+
+
+
+.Link-Text-Navbar-Home{
+  color:#0000EE;
+  font-size:34px;
+  font-weight: bold;
 }
 
+.Link-Text-Login-Signup{
+  color:#0000EE;
+  font-weight: bold;
+  display:flex;
+  flex:column;
+  justify-content:space-around;
+  margin: 10px;
+}
+
+.Link-Text-myProfile{
+  color:#0000EE;
+  display:flex;
+  flex:column;
+}
 
 .profile-dropdown{
   background-color:aliceblue;
@@ -27,7 +49,8 @@
     justify-content:space-between;
     height:80px;
     align-items: top;
-    border-bottom: 1px solid #e2e2e2;
+    border: 1px dashed black;
+    border-bottom: 3px solid black;
     padding-bottom: 11px;
     list-style:none;
     background-color: #d6bef1;

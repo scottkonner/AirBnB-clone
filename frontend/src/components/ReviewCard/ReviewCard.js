@@ -29,7 +29,7 @@ if(sessionUser){
             <div>{review.review}</div>
             <div>{review.stars} stars</div>
             <div>By {review.User.firstName} {review.User.lastName}</div>
-            {isOwner && <button onClick={deleteHandler}>Delete</button>}
+            {isOwner && <button onClick={deleteHandler} className='reviewCard-button'>Delete</button>}
         </div>
     )
 }

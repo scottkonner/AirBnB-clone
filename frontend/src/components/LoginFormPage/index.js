@@ -58,7 +58,7 @@ setPassword('password')
 
   return (
     <div>
-    <button onClick={ demoLogin }>Demo</button>
+    <button onClick={ demoLogin } className='button-Demo '>Demo-User Login</button>
     <form onSubmit={handleSubmit}>
       <ul>
         {errors.map((error, idx) => <li key={idx}>{error}</li>)}

@@ -21,11 +21,11 @@ const DetailedSpot = () => {
     const detailedSpot = spotsObj[spotId];
     useEffect(() => {
         dispatch(loadDetailedSpot(spotId))
-        .then(() => dispatch(loadSpotAllReviews(spotId)))
-        .then(() => setIsLoaded(true))
+            .then(() => dispatch(loadSpotAllReviews(spotId)))
+            .then(() => setIsLoaded(true))
 
 
-    }, [dispatch ])
+    }, [dispatch])
 
     const reviewsObj = useSelector(state => state.reviewState)
     const reviewsArr = Object.values(reviewsObj);
@@ -48,7 +48,7 @@ const DetailedSpot = () => {
         return () => document.removeEventListener("click", closeMenu);
     }, [showMenu]);
 
-    console.log('look @ DetailedSpot:', )
+    console.log('look @ DetailedSpot:',)
 
     // let isOwner;
 
@@ -63,31 +63,38 @@ const DetailedSpot = () => {
     }
 
     return isLoaded ? (
-        <div >
-            <img src={detailedSpot.previewImage} alt='not loading'></img>
-            <div>{detailedSpot.name}, located in {detailedSpot.city},{detailedSpot.state}, {detailedSpot.country}</div>
-            <div>${detailedSpot.price} per night</div>
-            <div>Star Rating:{detailedSpot.avgStarRating}</div>
-            <div>Latitude:{detailedSpot.lat}</div>
-            <div>Longitude:{detailedSpot.lng}</div>
+        <div className='detailedSpot'>
+            <div className='detailedSpot-pic'>
+                <img src={detailedSpot.previewImage} alt='not loading'></img>
+            </div>
 
-            <div>About: {detailedSpot.description}</div>
-            <div>Joined AirBnb on {detailedSpot.createdAt}</div>
+            <div className='detailedSpot-text-title'>{detailedSpot.name}</div>
+            <div className='detailedSpot-text'>{detailedSpot.city},{detailedSpot.state}, {detailedSpot.country}</div>
+            <div className='detailedSpot-text'>${detailedSpot.price} per night</div>
+            <div className='detailedSpot-text'>Star Rating:{detailedSpot.avgStarRating}</div>
+            <div className='detailedSpot-text'>Latitude:{detailedSpot.lat}</div>
+            <div className='detailedSpot-text'>Longitude:{detailedSpot.lng}</div>
 
-            <button onClick={openMenu}>
-                Reviews
-            </button>
-            {(!isOwner && !findTheReview) && <button onClick={event => window.location.href = `/${spotId}/createreview`}>Leave a review</button>}
+            <div className='detailedSpot-text'>About: {detailedSpot.description}</div>
+            <div className='detailedSpot-text'>Joined AirBnb on {detailedSpot.createdAt}</div>
+
+            <div className='detailedSpot-buttonBlock'>
+                <button onClick={openMenu} className='button'>
+                    Reviews
+                </button>
+                {(!isOwner && !findTheReview) && <button onClick={event => window.location.href = `/${spotId}/createreview`} className='button'>Leave a review</button>}
+                {isOwner && <button onClick={event => window.location.href = `/editspot/${spotId}`} className='button'>Edit</button>}
+                {isOwner && <button onClick={deleteHandler} className='button'>Delete</button>}
+            </div>
             {showMenu && (
                 <div className="profile-dropdown">
-                    <ReviewList/>
+                    <ReviewList />
 
                 </div>
             )}
 
 
-            {isOwner && <button onClick={event => window.location.href = `/editspot/${spotId}`}>Edit</button>}
-            {isOwner && <button onClick={deleteHandler}>Delete</button>}
+
         </div>
     ) : null
 }

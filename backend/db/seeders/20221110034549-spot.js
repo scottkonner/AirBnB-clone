@@ -12,7 +12,7 @@ module.exports = {
     return queryInterface.bulkInsert(options, [
       {
         ownerId: 1,
-        previewImage: 'https://preview.redd.it/5840mmuhaeu81.gif?format=png8&s=5e77cb0d3ee545ec43c292831a49899159262654',
+        previewImage: 'https://static.simpsonswiki.com/images/thumb/5/53/Fake_street.png/250px-Fake_street.png',
         address: '123 Fake St.',
         city: 'Springfield',
         state: 'IL',
@@ -25,7 +25,7 @@ module.exports = {
       },
       {
         ownerId: 2,
-        previewImage: 'https://upload.wikimedia.org/wikipedia/en/c/ca/742_Evergreen_Terrace.png',
+        previewImage: 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/66eaeef6-d231-4003-8797-6bf55243e109/d6uj38u-b9d019bb-76ec-49c2-9aad-8b1a13f7d73d.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzY2ZWFlZWY2LWQyMzEtNDAwMy04Nzk3LTZiZjU1MjQzZTEwOVwvZDZ1ajM4dS1iOWQwMTliYi03NmVjLTQ5YzItOWFhZC04YjFhMTNmN2Q3M2QuanBnIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.wfRyj6CSuyD5VJHa2EfNW4K_YGf2fbL10PnNWNLDKa0',
         address: '742 Evergreen Terrace',
         city: 'Springfield',
         state: 'IL',
